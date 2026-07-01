@@ -362,6 +362,7 @@ function solve_exa_flash(built; backend=nothing, verbose=false)
     d_actual = only(abs_d_val)
     objective = result.objective
     status = result.status
+    iterations = result.iter
     species_names = String.(first.(sort(collect(species_index), by=last)))
 
     if verbose
@@ -379,6 +380,7 @@ function solve_exa_flash(built; backend=nothing, verbose=false)
         backend="ExaModels/MadNLP",
         status=string(status),
         objective=Float64(objective),
+        iterations=iterations,
         species_names=species_names,
         variables=(;
             abs_d=abs_d_val,
@@ -394,6 +396,7 @@ function solve_exa_flash(built; backend=nothing, verbose=false)
             d_required=d_required,
             d_actual=d_actual,
             diameter_slack=d_actual - d_required,
+            iterations=iterations,
         ),
         solve_timing=solve_timing,
     )

@@ -4,11 +4,11 @@ using JuMP, Revise, Ipopt
 using Printf
 using HSL_jll
 
-include("flash_helper.jl")
+include("helper.jl")
 include("constraint.jl")
 include("JuMP_unit_model.jl")
 
-INLET_DATA_FILE = joinpath(@__DIR__, "data", "inlet_data_1_scenarios.jls")
+INLET_DATA_FILE = joinpath(@__DIR__, "data", "inlet_data_100_scenarios.jls")
 inlet_data = deserialize(INLET_DATA_FILE)
 
 N_abs = 10

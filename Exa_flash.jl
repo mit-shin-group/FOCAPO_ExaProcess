@@ -8,12 +8,12 @@ using CUDSS
 using Serialization
 using NLPModelsIpopt
 
-include("flash_helper.jl")
+include("helper.jl")
 include("constraint.jl")
 include("Exa_unit_model.jl")
 
 
-INLET_DATA_FILE = joinpath(@__DIR__, "data", "inlet_data_1000_scenarios.jls")
+INLET_DATA_FILE = joinpath(@__DIR__, "data", "inlet_data_5000_scenarios.jls")
 inlet_data = deserialize(INLET_DATA_FILE)
 
 N_abs = 10

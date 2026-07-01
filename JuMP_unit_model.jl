@@ -1,7 +1,7 @@
 function _build_absorber_flash_model(inlet_data, N_abs=1, Q=0.0)
     model = Model(Ipopt.Optimizer)
     set_optimizer_attribute(model, "bound_relax_factor", 0.0)
-    set_optimizer_attribute(model, "max_iter", 5000)
+    set_optimizer_attribute(model, "max_iter", 1000)
     set_optimizer_attribute(model, "linear_solver", "ma57")
 
 
@@ -226,6 +226,7 @@ function solve_jump_flash(built; verbose=false)
     d_actual = only(abs_d_val)
     objective = objective_value(model)
     status = termination_status(model)
+    iterations = JuMP.MOI.get(model, JuMP.MOI.BarrierIterations())
     species_names = String.(first.(sort(collect(species_index), by=last)))
 
     if verbose
@@ -243,6 +244,7 @@ function solve_jump_flash(built; verbose=false)
         backend="JuMP/Ipopt",
         status=string(status),
         objective=Float64(objective),
+        iterations=iterations,
         species_names=species_names,
         variables=(;
             abs_d=abs_d_val,
@@ -258,6 +260,7 @@ function solve_jump_flash(built; verbose=false)
             d_required=d_required,
             d_actual=d_actual,
             diameter_slack=d_actual - d_required,
+            iterations=iterations,
         ),
         solve_timing=solve_timing,
     )
